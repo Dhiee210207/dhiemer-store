@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Dhiemer Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f0f1c, #1c1c2c);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .box {
+      background: #1e1e2f;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+    }
+    h2 {
+      color: #a97fff;
+    }
+    .item {
+      margin: 10px 0;
+      color: #ccc;
+    }
+    .whatsapp {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Ringkasan Pesanan</h2>
+    <div class="item"><strong>ID Game:</strong> <span id="idGame"></span></div>
+    <div class="item"><strong>Game:</strong> <span id="game"></span></div>
+    <div class="item"><strong>Paket:</strong> <span id="paket"></span></div>
+    <div class="item"><strong>Pembayaran:</strong> <span id="pembayaran"></span></div>
+    <a id="waLink" class="whatsapp" target="_blank">Konfirmasi via WhatsApp</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id") || "-";
+    const game = params.get("game") || "-";
+    const paket = params.get("paket") || "-";
+    const pembayaran = params.get("pembayaran") || "-";
+
+    document.getElementById("idGame").textContent = id;
+    document.getElementById("game").textContent = game;
+    document.getElementById("paket").textContent = paket;
+    document.getElementById("pembayaran").textContent = pembayaran;
+
+    const message = `Halo Admin, saya ingin top up:\nGame: ${game}\nID: ${id}\nPaket: ${paket}\nPembayaran: ${pembayaran}`;
+    const waURL = `https://wa.me/6281255707273?text=${encodeURIComponent(message)}`;
+    document.getElementById("waLink").href = waURL;
+  </script>
+</body>
+</html>
