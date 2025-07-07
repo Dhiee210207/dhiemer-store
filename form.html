@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Form Pemesanan - Dhiemer Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f0f1c, #1c1c2c);
-      color: white;
       margin: 0;
-      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0f0f1c;
+      color: white;
     }
     .container {
-      max-width: 600px;
-      margin: auto;
-      background-color: #1e1e2f;
-      padding: 30px;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #1a1a2e;
       border-radius: 12px;
     }
     h2 {
+      color: #b48fff;
       text-align: center;
-      color: #a97fff;
     }
     label {
       display: block;
       margin-top: 15px;
     }
-    input, select {
+    select, input[type="text"], button {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -36,113 +35,105 @@
       border-radius: 8px;
     }
     button {
-      width: 100%;
-      background: linear-gradient(135deg, #6e44ff, #a97fff);
-      border: none;
-      padding: 14px;
-      font-size: 16px;
+      background-color: #b48fff;
       color: white;
-      border-radius: 12px;
+      font-weight: bold;
       margin-top: 20px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Form Pemesanan</h2>
-    <form id="formTopup">
-      <label for="idGame">ID Game</label>
-      <input type="text" id="idGame" name="idGame" required />
 
-      <label for="paket">Pilih Paket</label>
-      <select id="paket" name="paket" required>
-        <option value="">-- Pilih Paket --</option>
-      </select>
+<div class="container">
+  <h2>Form Pemesanan</h2>
+  <form id="orderForm">
+    <label for="userId">ID Pengguna:</label>
+    <input type="text" id="userId" required placeholder="Masukkan ID atau Username">
 
-      <label for="metode">Metode Pembayaran</label>
-      <select id="metode" name="metode" required>
-        <option value="">-- Pilih Pembayaran --</option>
-        <option value="Dana">Dana</option>
-        <option value="OVO">OVO</option>
-        <option value="GoPay">GoPay</option>
-        <option value="Bank Transfer">Bank Transfer</option>
-      </select>
+    <label for="paket">Pilih Paket:</label>
+    <select id="paket" required>
+      <option value="">Silakan pilih game terlebih dahulu</option>
+    </select>
 
-      <button type="submit">Lanjutkan ke Checkout</button>
-    </form>
-  </div>
+    <label for="metode">Metode Pembayaran:</label>
+    <select id="metode" required>
+      <option value="QRIS">QRIS</option>
+      <option value="Dana">Dana</option>
+      <option value="OVO">OVO</option>
+      <option value="Gopay">Gopay</option>
+      <option value="ShopeePay">ShopeePay</option>
+      <option value="Transfer Bank">Transfer Bank</option>
+    </select>
 
-  <script>
-    const paketOpsi = {
-      "Mobile Legends": [
-        "86 Diamonds – Rp20.000",
-        "172 Diamonds – Rp38.000",
-        "257 Diamonds – Rp56.000",
-        "514 Diamonds – Rp108.000",
-        "770 Diamonds – Rp159.000",
-        "1020 Diamonds – Rp199.000",
-        "1530 Diamonds – Rp289.000",
-        "Twilight Pass – Rp159.000"
-      ],
-      "Free Fire": [
-        "70 Diamonds – Rp11.000",
-        "140 Diamonds – Rp21.000",
-        "355 Diamonds – Rp49.000",
-        "720 Diamonds – Rp101.000",
-        "1000 Diamonds – Rp139.000",
-        "1450 Diamonds – Rp199.000",
-        "2000 Diamonds – Rp269.000"
-      ],
-      "PUBG Mobile": [
-        "60 UC – Rp12.000",
-        "325 UC – Rp59.000",
-        "660 UC – Rp119.000",
-        "1800 UC – Rp279.000",
-        "3850 UC – Rp549.000"
-      ],
-      "Genshin Impact": [
-        "60 Crystals – Rp14.000",
-        "300 Crystals – Rp70.000",
-        "980 Crystals – Rp209.000",
-        "1980 Crystals – Rp399.000",
-        "3280 Crystals – Rp699.000",
-        "Welkin Moon – Rp79.000"
-      ],
-      "Roblox": [
-        "80 Robux – Rp12.000",
-        "400 Robux – Rp59.000",
-        "800 Robux – Rp109.000",
-        "1700 Robux – Rp219.000",
-        "4500 Robux – Rp499.000"
-      ]
-    };
+    <button type="submit">Lanjutkan Pembayaran</button>
+  </form>
+</div>
 
-    const params = new URLSearchParams(window.location.search);
-    const game = params.get("game");
-    const paketSelect = document.getElementById("paket");
+<script>
+  const paketData = {
+  // Game populer
+  "Valorant": ["125 VP - Rp15.000", "420 VP - Rp45.000", "700 VP - Rp75.000", "1120 VP - Rp120.000", "1650 VP - Rp180.000"],
+  "Mobile Legends": ["86 Diamonds - Rp20.000", "172 Diamonds - Rp38.000", "257 Diamonds - Rp55.000", "344 Diamonds - Rp72.000", "429 Diamonds - Rp90.000"],
+  "Free Fire": ["70 Diamond - Rp11.000", "140 Diamond - Rp20.000", "355 Diamond - Rp50.000", "720 Diamond - Rp90.000", "1000 Diamond - Rp120.000"],
+  "COD Mobile": ["31 CP - Rp5.000", "62 CP - Rp10.000", "127 CP - Rp20.000", "259 CP - Rp40.000", "550 CP - Rp75.000"],
+  "Roblox": ["80 Robux - Rp12.000", "400 Robux - Rp60.000", "800 Robux - Rp120.000", "1700 Robux - Rp250.000", "4000 Robux - Rp580.000"],
+  "Honor of Kings": ["60 Token - Rp10.000", "120 Token - Rp20.000", "240 Token - Rp38.000", "500 Token - Rp78.000"],
+  "Ragnarok M: Classic": ["30 Diamonds - Rp7.000", "60 Diamonds - Rp14.000", "120 Diamonds - Rp28.000", "300 Diamonds - Rp65.000"],
+  "State of Survival": ["300 Biocaps - Rp15.000", "600 Biocaps - Rp30.000", "1200 Biocaps - Rp58.000", "2400 Biocaps - Rp110.000"],
+  "Pokemon Unite": ["100 Aeos Gems - Rp12.000", "245 Aeos Gems - Rp27.000", "490 Aeos Gems - Rp50.000", "1220 Aeos Gems - Rp115.000"],
+  "NBA Infinite": ["500 Coins - Rp10.000", "1000 Coins - Rp19.000", "2000 Coins - Rp35.000", "4000 Coins - Rp68.000"],
+  "Racing Master": ["50 Voucher - Rp9.000", "100 Voucher - Rp17.000", "200 Voucher - Rp32.000", "500 Voucher - Rp78.000"],
+  "Eggy Party": ["60 Egg Coin - Rp8.000", "120 Egg Coin - Rp15.000", "240 Egg Coin - Rp28.000", "480 Egg Coin - Rp55.000"],
+  "Zenless Zone Zero": ["60 Z-Coin - Rp9.000", "120 Z-Coin - Rp18.000", "300 Z-Coin - Rp40.000", "600 Z-Coin - Rp78.000"],
+  "Blood Strike": ["100 Gold - Rp6.000", "200 Gold - Rp11.000", "400 Gold - Rp20.000", "1000 Gold - Rp45.000"],
 
-    if (game && paketOpsi[game]) {
-      paketOpsi[game].forEach(paket => {
-        const opt = document.createElement("option");
-        opt.value = paket;
-        opt.textContent = paket;
-        paketSelect.appendChild(opt);
-      });
-    } else {
-      const opt = document.createElement("option");
-      opt.value = "-";
-      opt.textContent = "Game tidak dikenali";
-      paketSelect.appendChild(opt);
-    }
+  // Tambahan game populer lainnya
+  "PUBG Mobile": ["60 UC - Rp15.000", "300 UC - Rp70.000", "600 UC - Rp130.000", "1250 UC - Rp250.000"],
+  "Genshin Impact": ["60 Primogems - Rp20.000", "300 Primogems - Rp90.000", "980 Primogems - Rp280.000", "1980 Primogems - Rp530.000"],
+  "Minecraft": ["500 Minecoins - Rp60.000", "1000 Minecoins - Rp110.000", "2000 Minecoins - Rp210.000"],
+  "Steam Wallet": ["50.000 - Rp52.000", "100.000 - Rp102.000", "200.000 - Rp200.000", "500.000 - Rp495.000"],
 
-    document.getElementById("formTopup").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const idGame = document.getElementById("idGame").value;
-      const paket = document.getElementById("paket").value;
-      const metode = document.getElementById("metode").value;
-      window.location.href = `checkout.html?id=${encodeURIComponent(idGame)}&game=${encodeURIComponent(game)}&paket=${encodeURIComponent(paket)}&pembayaran=${encodeURIComponent(metode)}`;
+  // Pulsa Operator Indonesia
+  "Telkomsel": ["5.000 - Rp6.000", "10.000 - Rp11.000", "20.000 - Rp21.000", "25.000 - Rp26.000", "50.000 - Rp52.000", "100.000 - Rp102.000"],
+  "XL": ["5.000 - Rp6.000", "10.000 - Rp11.000", "20.000 - Rp21.000", "25.000 - Rp26.000", "50.000 - Rp52.000", "100.000 - Rp102.000"],
+  "Indosat": ["5.000 - Rp6.000", "10.000 - Rp11.000", "20.000 - Rp21.000", "25.000 - Rp26.000", "50.000 - Rp52.000", "100.000 - Rp102.000"],
+  "Tri": ["5.000 - Rp6.000", "10.000 - Rp11.000", "20.000 - Rp21.000", "25.000 - Rp26.000", "50.000 - Rp52.000", "100.000 - Rp102.000"],
+  "Smartfren": ["5.000 - Rp6.000", "10.000 - Rp11.000", "20.000 - Rp21.000", "25.000 - Rp26.000", "50.000 - Rp52.000", "100.000 - Rp102.000"],
+
+  // Token PLN
+  "Token PLN": ["20.000 - Rp22.000", "50.000 - Rp53.000", "100.000 - Rp105.000", "200.000 - Rp210.000"],
+
+  // Paket Internet (opsional tambahan)
+  "Paket Internet Telkomsel": ["1 GB - Rp10.000", "5 GB - Rp40.000", "10 GB - Rp75.000"],
+  "Paket Internet XL": ["1 GB - Rp9.000", "5 GB - Rp35.000", "10 GB - Rp70.000"],
+  "Paket Internet Indosat": ["1 GB - Rp8.000", "5 GB - Rp33.000", "10 GB - Rp65.000"]
+};
+
+
+  const params = new URLSearchParams(window.location.search);
+  const produk = params.get("produk");
+
+  const paketSelect = document.getElementById("paket");
+  if (produk && paketData[produk]) {
+    paketSelect.innerHTML = "";
+    paketData[produk].forEach(paket => {
+      const option = document.createElement("option");
+      option.value = paket;
+      option.textContent = paket;
+      paketSelect.appendChild(option);
     });
-  </script>
+  } else {
+    paketSelect.innerHTML = "<option value=''>Paket tidak ditemukan untuk game ini</option>";
+  }
+
+  document.getElementById("orderForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const userId = document.getElementById("userId").value;
+    const paket = document.getElementById("paket").value;
+    window.location.href = `checkout.html?produk=${encodeURIComponent(produk)}&userId=${encodeURIComponent(userId)}&paket=${encodeURIComponent(paket)}`;
+  });
+</script>
+
 </body>
 </html>

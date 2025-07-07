@@ -1,72 +1,95 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout - Dhiemer Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f0f1c, #1c1c2c);
+      background-color: #0f0f1c;
       color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
-    .box {
-      background: #1e1e2f;
-      padding: 30px;
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #1a1a2e;
       border-radius: 12px;
-      max-width: 400px;
-      text-align: center;
     }
     h2 {
-      color: #a97fff;
+      color: #b48fff;
+      text-align: center;
     }
-    .item {
-      margin: 10px 0;
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="text"], select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+    }
+    input[readonly] {
+      background-color: #2a2a3c;
       color: #ccc;
     }
-    .whatsapp {
-      display: inline-block;
-      background: #25D366;
+    button {
+      background-color: #b48fff;
       color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
+      font-weight: bold;
       margin-top: 20px;
-      text-decoration: none;
+      cursor: pointer;
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #ccc;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h2>Ringkasan Pesanan</h2>
-    <div class="item"><strong>ID Game:</strong> <span id="idGame"></span></div>
-    <div class="item"><strong>Game:</strong> <span id="game"></span></div>
-    <div class="item"><strong>Paket:</strong> <span id="paket"></span></div>
-    <div class="item"><strong>Pembayaran:</strong> <span id="pembayaran"></span></div>
-    <a id="waLink" class="whatsapp" target="_blank">Konfirmasi via WhatsApp</a>
-  </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id") || "-";
-    const game = params.get("game") || "-";
-    const paket = params.get("paket") || "-";
-    const pembayaran = params.get("pembayaran") || "-";
+<div class="container">
+  <h2>Checkout</h2>
+  <form id="checkoutForm" target="_blank">
+    <label for="produk">Produk:</label>
+    <input type="text" id="produk" readonly>
 
-    document.getElementById("idGame").textContent = id;
-    document.getElementById("game").textContent = game;
-    document.getElementById("paket").textContent = paket;
-    document.getElementById("pembayaran").textContent = pembayaran;
+    <label for="userId">ID / Username:</label>
+    <input type="text" id="userId" readonly>
 
-    const message = `Halo Admin, saya ingin top up:\nGame: ${game}\nID: ${id}\nPaket: ${paket}\nPembayaran: ${pembayaran}`;
-    const waURL = `https://wa.me/6281255707273?text=${encodeURIComponent(message)}`;
-    document.getElementById("waLink").href = waURL;
-  </script>
+    <label for="paket">Paket:</label>
+    <input type="text" id="paket" readonly>
+
+    <button type="submit">Konfirmasi & Chat Admin</button>
+  </form>
+  <p class="note">Setelah klik tombol, kamu akan diarahkan ke WhatsApp admin kami untuk konfirmasi.</p>
+</div>
+
+<script>
+  const url = new URLSearchParams(window.location.search);
+  const produk = url.get('produk') || "";
+  const userId = url.get('userId') || "";
+  const paket = url.get('paket') || "";
+
+  document.getElementById("produk").value = produk;
+  document.getElementById("userId").value = userId;
+  document.getElementById("paket").value = paket;
+
+  document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const wa = "https://wa.me/6281255707273?text=" + encodeURIComponent(
+      `Halo Admin Dhiemer Store,%0ASaya ingin top up:%0AProduk: ${produk}%0AUser ID: ${userId}%0APaket: ${paket}`
+    );
+    window.open(wa, '_blank');
+  });
+</script>
+
 </body>
 </html>
